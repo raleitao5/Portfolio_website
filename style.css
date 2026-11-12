@@ -1,0 +1,167 @@
+/* 1. Sets a dark, clean background color and base font for the entire page */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. Turns the photo container into a horizontal, scrollable track */
+.coverflow-container {
+    display:flex;
+    align-items: center;
+    overflow-x: auto;
+    padding: 60px 20px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    width: 100%;
+    /* Hides scrollbars for a clean look while maintaining scrollability */
+    scrollbar-width: none;
+
+    perspective 1000px;
+
+    /* New styles for drag-to-scroll */
+    cursor: grab;
+    user-select: none; /* Prevents accidental image/text highlighting while dragging */
+}
+
+.coverflow-container:active {
+    cursor: grabbing; /* Changes cursor to a closed fist while dragging */
+}
+
+.coverflow-container *,
+.coverflow-container img {
+    cursor: inherit;
+}
+
+.coverflow-container:active *,
+.coverflow-container:active img {
+    cursor: grabbing;
+}
+
+.coverflow-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* 3. Styles each individual gallery card on the track */
+.coverflow-item {
+    flex: 0 0 260px; /* Locks the width of each card */
+    height: 360px;
+    scroll-snap-align: center;
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+
+    transform-style: preserve-3d;
+
+    margin-left: -35px;
+    margin-right: -35px;
+    z-index: 1;
+
+    position: relative;
+}
+
+.coverflow-item.active {
+
+}
+
+.coverflow-item:not(.void-item):first-of-type {
+    margin-left: 0;
+}
+
+.coverflow-item:not(.void-item):last-of-type {
+    margin-right: -70px;
+}
+
+/* 4. Styles the image inside the card to fill the space cleanly */
+.coverflow-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+/* 5. The active state applied to the center item */
+.coverflow-item.active {
+    transform: scale(1.1); /* Center item pops forward and enlarges */
+    opacity: 1.0; /* Full brightness */
+    z-index: 10; /* Ensures it sits visually on top of side items */
+}
+
+.coverflow-item.void-item {
+    flex: 0 0 50vw !important;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    margin: 0 !important;
+    scroll-snap-align: none;
+}
+
+.category-row {
+    margin-bottom: 50px;
+}
+
+.category-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    color: #e0e0e0;
+    letter-spacing: 0.5px;
+}
+
+#dashboardConatainer {
+    padding: 40px 0;
+}
+
+.card-menu-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.coverflow-item:hover .card-menu-btn,
+.coverflow-item.active .card-menu-btn {
+    opacity: 1;
+}
+
+.card-menu-btn:hover {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.card-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 12px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow 0 10px 25px rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 30;
+    min-width: 140px;
+    overflow: hidden;
+}
+
+.card-dropdown.show {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 14px;
+    font-size: 13px
+}
